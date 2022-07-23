@@ -1,2 +1,2 @@
 # calculator
-This is a simple calculator project from Brainnest FD trainind. Developed in HTML, CSS and JavaScript
+This is a simple calculator project from Brainnest FD training. Developed in HTML, CSS and JavaScript
