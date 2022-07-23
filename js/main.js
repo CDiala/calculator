@@ -87,6 +87,17 @@ function handlePeriod(button) {
   }
 }
 
+function handleZero(button) {
+  if (objOperationData.input.value === "0") {
+    // objOperationData.input.value += button.textContent;
+  }
+  // if (objOperationData.operatorSign === "") {
+  //   objOperationData.num1 = objOperationData.input.value;
+  // } else {
+  //   objOperationData.num2 = objOperationData.input.value;
+  // }
+}
+
 function handleNums(button) {
   if (objOperationData.operatorSign === "") {
     if (objOperationData.num1 === 0) {
@@ -167,7 +178,11 @@ objOperationData.queryIntegerButtons.forEach((button) => {
     if (button.textContent === ".") {
       handlePeriod(button);
     } else if (button.textContent / 1 >= 0) {
-      handleNums(button);
+      if (button.textContent === "0") {
+        handleZero(button);
+      } else {
+        handleNums(button);
+      }
     } else if (button.textContent === "C") {
       if (confirm("are you sure you want to clear?")) {
         resetCalculator(objOperationData);
