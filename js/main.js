@@ -89,13 +89,7 @@ function handlePeriod(button) {
 
 function handleZero(button) {
   if (objOperationData.input.value === "0") {
-    // objOperationData.input.value += button.textContent;
   }
-  // if (objOperationData.operatorSign === "") {
-  //   objOperationData.num1 = objOperationData.input.value;
-  // } else {
-  //   objOperationData.num2 = objOperationData.input.value;
-  // }
 }
 
 function handleNums(button) {
