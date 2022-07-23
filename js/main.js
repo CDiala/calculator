@@ -55,7 +55,7 @@ function operate(sign, num1, num2) {
 }
 
 function roundNumber(num) {
-  if (num.toString().includes(".") & (num.toString().length > 10)) {
+  if (num.toString().includes(".") & (num.toString().length > 5)) {
     return num.toFixed(5);
   } else {
     return num;
