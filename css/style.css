@@ -1,0 +1,128 @@
+:root {
+  --color-black: #000000;
+  --color-extra: #c5bdbd;
+  --color-grey: #313131;
+  --color-light-grey: #9f9f9f;
+  --color-light-orange: #eebc6e;
+  --color-orange: #f69908;
+  --color-plain: #fff;
+  --color-secondary: #6b6b6b;
+  --color-warning: rgb(223, 84, 25);
+}
+
+body {
+  align-items: center;
+  column-gap: 60px;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+}
+
+.calculator-container {
+  background-color: var(--color-black);
+  border-radius: 20px;
+  height: 100%;
+  margin-left: 60px;
+  max-height: 678px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.calculator-display-container {
+  display: flex;
+  flex-direction: column;
+  height: 118px;
+  padding: 20px 30px;
+}
+
+.calculator-key-container {
+  display: grid;
+  gap: 20px 20px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  padding: 20px;
+}
+
+.error-display {
+  color: var(--color-warning);
+  font-size: 18px;
+  text-align: center;
+}
+
+.btn {
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  font-size: 24px;
+  height: 80px;
+  justify-content: center;
+  padding: 30px;
+  width: 80px;
+}
+
+.btn-sign,
+.btn-equals {
+  background-color: var(--color-orange);
+}
+
+.btn-num,
+.btn-back {
+  background-color: var(--color-grey);
+}
+
+.btn-num,
+.btn.btn-sign,
+.btn.btn-equals,
+.btn-back {
+  color: var(--color-plain);
+}
+
+.btn-cancel,
+.btn-plus-minus,
+.btn-percent {
+  background-color: var(--color-light-grey);
+}
+
+.btn-num:hover,
+.btn-back:hover {
+  background-color: var(--color-secondary);
+}
+
+.btn-cancel:hover,
+.btn-plus-minus:hover,
+.btn-percent:hover {
+  background-color: var(--color-extra);
+}
+
+.btn-sign:hover,
+.btn-equals:hover {
+  background-color: var(--color-light-orange);
+}
+
+.btn-sign:focus {
+  background-color: var(--color-plain);
+  color: var(--color-orange);
+}
+
+.calculator-display-input,
+.calculator-display-output {
+  background-color: transparent;
+  border: none;
+  color: var(--color-plain);
+  font-size: 20px;
+  outline: none;
+  text-align: right;
+}
+
+.calculator-display-output {
+  font-size: 48px;
+}
+
+.calculator-display-input {
+  font-size: 36px;
+}
+
+.kudos {
+  font-size: 18px;
+}
