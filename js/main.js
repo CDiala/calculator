@@ -12,22 +12,25 @@ objCalculator.buttons.forEach((button) => {
   button.addEventListener("click", (e) => {
     console.log(e);
     if (!button.dataset.action) {
-      if (objCalculator.num1 === 0 && !objCalculator.sign) {
+      if (button.textContent === "0") {
+        if (
+          (!objCalculator.sign && objCalculator.num1 === 0) ||
+          (objCalculator.sign && objCalculator.num2 === 0)
+        ) {
+        } else if (objCalculator.num1 === 0 && !objCalculator.sign) {
+          updateNumber(objCalculator, "num1", button.textContent);
+        } else if (objCalculator.num1 !== 0 && !objCalculator.sign) {
+          let str = convertToString(objCalculator.num1);
+          str = appendString(str, button.textContent);
+          updateNumber(objCalculator, "num1", str);
+        }
+      } else if (objCalculator.num1 === 0 && !objCalculator.sign) {
         updateNumber(objCalculator, "num1", button.textContent);
       } else if (objCalculator.num1 !== 0 && !objCalculator.sign) {
         let str = convertToString(objCalculator.num1);
         str = appendString(str, button.textContent);
         updateNumber(objCalculator, "num1", str);
       }
-      console.log(objCalculator);
-    } else if (
-      button.textContent === "." &&
-      objCalculator.num1 === 0 &&
-      !objCalculator.sign
-    ) {
-      let str = convertToString(objCalculator.num1);
-      str = appendString(str, button.textContent);
-      updateNumber(objCalculator, "num1", str);
       console.log(objCalculator);
     }
     displayNumber(objCalculator.input, objCalculator.num1);
