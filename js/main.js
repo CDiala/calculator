@@ -41,7 +41,8 @@ objCalculator.buttons.forEach((button) => {
         updateNumber(objCalculator, !objCalculator.sign ? "num1" : "num2", str);
       }
       displayNumber(objCalculator.input, objCalculator.num1);
-      console.log("periodt");
+    } else if (button.textContent === "←") {
+      deleteNumber(objCalculator, "input");
     }
     displayNumber(objCalculator.input, objCalculator.num1);
   });
@@ -61,4 +62,18 @@ function appendString(oldVal, str) {
 
 function displayNumber(field, value) {
   field.value = value;
+}
+
+function deleteNumber(obj, prop) {
+  // doesn't work on decimal numbers. check
+  console.log(obj[prop].value);
+  let charLength = obj[prop].value.length;
+  // obj[prop].value = obj[prop].value.slice(0, obj[prop].value[charLength - 1]);
+  obj[prop].value = obj[prop].value.replace(
+    obj[prop].value[charLength - 1],
+    ""
+  );
+  console.log(obj[prop].value);
+  updateNumber(obj, obj.sign ? "num2" : "num1", obj[prop].value);
+  // console.log(obj);
 }
