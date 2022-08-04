@@ -32,6 +32,16 @@ objCalculator.buttons.forEach((button) => {
         updateNumber(objCalculator, "num1", str);
       }
       console.log(objCalculator);
+    } else if (button.textContent === ".") {
+      if (!objCalculator.input.value.includes(".")) {
+        let str = convertToString(
+          !objCalculator.sign ? objCalculator.num1 : objCalculator.num2
+        );
+        str = appendString(str, button.textContent);
+        updateNumber(objCalculator, !objCalculator.sign ? "num1" : "num2", str);
+      }
+      displayNumber(objCalculator.input, objCalculator.num1);
+      console.log("periodt");
     }
     displayNumber(objCalculator.input, objCalculator.num1);
   });
