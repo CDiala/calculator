@@ -65,15 +65,14 @@ function displayNumber(field, value) {
 }
 
 function deleteNumber(obj, prop) {
-  // doesn't work on decimal numbers. check
-  console.log(obj[prop].value);
-  let charLength = obj[prop].value.length;
-  // obj[prop].value = obj[prop].value.slice(0, obj[prop].value[charLength - 1]);
-  obj[prop].value = obj[prop].value.replace(
-    obj[prop].value[charLength - 1],
-    ""
+  let charLength;
+  let newStr;
+  charLength = obj[prop].value.length;
+  newStr = obj[prop].value.substring(0, charLength - 1);
+  updateNumber(
+    obj,
+    obj.sign ? "num2" : "num1",
+    obj[prop].value.length === 1 ? "0" : newStr
   );
-  console.log(obj[prop].value);
-  updateNumber(obj, obj.sign ? "num2" : "num1", obj[prop].value);
-  // console.log(obj);
+  displayNumber(obj[prop], newStr);
 }
