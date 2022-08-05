@@ -40,7 +40,7 @@ objCalculator.buttons.forEach((button) => {
         str = appendString(str, button.textContent);
         updateNumber(objCalculator, !objCalculator.sign ? "num1" : "num2", str);
       }
-      displayNumber(objCalculator.input, objCalculator.num1);
+      // displayNumber(objCalculator.input, objCalculator.num1);
     } else if (button.textContent === "←") {
       deleteNumber(objCalculator, "input");
     }
