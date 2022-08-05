@@ -3,8 +3,8 @@ let objCalculator = {
   input: document.querySelector(".calculator-display-input"),
   output: document.querySelector(".calculator-display-output"),
   error: document.querySelector(".error-display"),
-  num1: 0,
-  num2: 0,
+  num1: "0",
+  num2: "0",
   sign: "",
 };
 
@@ -14,19 +14,19 @@ objCalculator.buttons.forEach((button) => {
     if (!button.dataset.action) {
       if (button.textContent === "0") {
         if (
-          (!objCalculator.sign && objCalculator.num1 === 0) ||
-          (objCalculator.sign && objCalculator.num2 === 0)
+          (!objCalculator.sign && objCalculator.num1 === "0") ||
+          (objCalculator.sign && objCalculator.num2 === "0")
         ) {
-        } else if (objCalculator.num1 === 0 && !objCalculator.sign) {
+        } else if (objCalculator.num1 === "0" && !objCalculator.sign) {
           updateNumber(objCalculator, "num1", button.textContent);
-        } else if (objCalculator.num1 !== 0 && !objCalculator.sign) {
+        } else if (objCalculator.num1 !== "0" && !objCalculator.sign) {
           let str = convertToString(objCalculator.num1);
           str = appendString(str, button.textContent);
           updateNumber(objCalculator, "num1", str);
         }
-      } else if (objCalculator.num1 === 0 && !objCalculator.sign) {
+      } else if (objCalculator.num1 === "0" && !objCalculator.sign) {
         updateNumber(objCalculator, "num1", button.textContent);
-      } else if (objCalculator.num1 !== 0 && !objCalculator.sign) {
+      } else if (objCalculator.num1 !== "0" && !objCalculator.sign) {
         let str = convertToString(objCalculator.num1);
         str = appendString(str, button.textContent);
         updateNumber(objCalculator, "num1", str);
