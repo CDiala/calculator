@@ -59,6 +59,8 @@ objCalculator.buttons.forEach((button) => {
       } else {
         console.log("perform operation");
       }
+    } else if (button.textContent.includes("±")) {
+      handleNegativeNums();
     }
     displayNumber(
       objCalculator.input,
@@ -92,7 +94,27 @@ function deleteNumber(obj, prop) {
   updateNumber(
     obj,
     obj.sign ? "num2" : "num1",
-    obj[prop].value.length === 1 ? "0" : newStr
+    obj[prop].value.length === 1 ||
+      (obj[prop].value.length === 2 && obj[prop].value.includes("-"))
+      ? "0"
+      : newStr
   );
   displayNumber(obj[prop], newStr);
+}
+
+function handleNegativeNums() {
+  let tempArr;
+  if (!objCalculator.input.value.toString().includes("-")) {
+    tempArr = objCalculator.input.value.split("");
+    tempArr.unshift("-");
+    tempArr = tempArr.join("");
+  } else {
+    tempArr = objCalculator.input.value.substring(1);
+  }
+  displayNumber(objCalculator.input, tempArr);
+  updateNumber(
+    objCalculator,
+    !objCalculator.sign ? "num1" : "num2",
+    objCalculator.input.value
+  );
 }
