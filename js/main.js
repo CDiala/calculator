@@ -11,26 +11,36 @@ let objCalculator = {
 objCalculator.buttons.forEach((button) => {
   let text = button.textContent;
   button.addEventListener("click", (e) => {
-    // console.log(e);
     if (!button.dataset.action) {
       if (text === "0") {
         if (
           (!objCalculator.sign && objCalculator.num1 === "0") ||
           (objCalculator.sign && objCalculator.num2 === "0")
         ) {
-        } else if (objCalculator.num1 === "0" && !objCalculator.sign) {
-          updateNumber(objCalculator, "num1", text);
-        } else if (objCalculator.num1 !== "0" && !objCalculator.sign) {
-          let str = convertToString(objCalculator.num1);
+        } else {
+          let isFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
+          let str = convertToString(
+            isFirstNum ? objCalculator.num1 : objCalculator.num2
+          );
           str = appendString(str, text);
-          updateNumber(objCalculator, "num1", str);
+          updateNumber(objCalculator, isFirstNum ? "num1" : "num2", str);
         }
-      } else if (objCalculator.num1 === "0" && !objCalculator.sign) {
-        updateNumber(objCalculator, "num1", text);
-      } else if (objCalculator.num1 !== "0" && !objCalculator.sign) {
-        let str = convertToString(objCalculator.num1);
+      } else if (
+        (objCalculator.num1 === "0" && !objCalculator.sign) ||
+        (objCalculator.num2 === "0" && objCalculator.sign)
+      ) {
+        let replaceFirstNum = objCalculator.num1 === "0" && !objCalculator.sign;
+        updateNumber(objCalculator, replaceFirstNum ? "num1" : "num2", text);
+      } else if (
+        (objCalculator.num1 !== "0" && !objCalculator.sign) ||
+        (objCalculator.num2 !== "0" && objCalculator.sign)
+      ) {
+        let appendFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
+        let str = convertToString(
+          appendFirstNum ? objCalculator.num1 : objCalculator.num2
+        );
         str = appendString(str, text);
-        updateNumber(objCalculator, "num1", str);
+        updateNumber(objCalculator, appendFirstNum ? "num1" : "num2", str);
       }
     } else if (text === ".") {
       if (!objCalculator.input.value.includes(".")) {
@@ -40,7 +50,6 @@ objCalculator.buttons.forEach((button) => {
         str = appendString(str, text);
         updateNumber(objCalculator, !objCalculator.sign ? "num1" : "num2", str);
       }
-      // displayNumber(objCalculator.input, objCalculator.num1);
     } else if (text === "←") {
       deleteNumber(objCalculator, "input");
     } else if (text === "÷" || text === "×" || text === "−" || text === "+") {
@@ -51,8 +60,11 @@ objCalculator.buttons.forEach((button) => {
         console.log("perform operation");
       }
     }
-    displayNumber(objCalculator.input, objCalculator.num1);
-    // console.log(objCalculator);
+    displayNumber(
+      objCalculator.input,
+      !objCalculator.sign ? objCalculator.num1 : objCalculator.num2
+    );
+    console.log(objCalculator);
   });
 });
 
