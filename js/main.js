@@ -57,6 +57,27 @@ objCalculator.buttons.forEach((button) => {
         console.log("special char detected:", text);
         updateNumber(objCalculator, "sign", text);
       } else {
+        /*
+        if (<text> is + or - && obj.sign is + or -)
+        OR
+        if (<text> is / or * && obj.sign is /, *, +, or -)
+          1. execute operation
+          2. save the returned answer in objCalculator.num1
+          3. display the returned answer in objCalculator.output
+          4. replace objCalculator.sign with <text>
+
+        ELSE if (<text> is + or - && obj.sign is / or *):
+          1. store new sign in a tempSign variable in objCalculator (to be created)
+          2. save the next number in a tempNum variable in objCalculator (to be created)
+          3a. if sign is * or /, calculate num2 * tempNum OR num2 / tempNum and save the ans in num2. then save sign in tempSign and save next num in tempNum.
+          3b. if sign is + or - , 
+            i) calculate num1 +or- num2 *or/ tempNum and save answer in num1.
+            ii) update obj.sign to reflect the new sign from user.
+            iii) clear num2
+            iv) display answer in output
+            v) reset input to 0 (code already implemented - kindly confirm)
+          4. replace objCalculator.sign with <text>
+        */
         console.log("perform operation");
       }
     } else if (button.textContent.includes("±")) {
