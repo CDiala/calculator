@@ -148,4 +148,8 @@ function subtractNums(num1, num2) {
   return +num1 - +num2;
 }
 
-console.log(subtractNums("2", "5"));
+function multiplyNums(num1, num2) {
+  return +num1 * +num2;
+}
+
+console.log(multiplyNums("2", "5"));
