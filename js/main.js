@@ -144,4 +144,8 @@ function addNums(num1, num2) {
   return +num1 + +num2;
 }
 
-console.log(addNums("2", "5"));
+function subtractNums(num1, num2) {
+  return +num1 - +num2;
+}
+
+console.log(subtractNums("2", "5"));
