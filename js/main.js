@@ -152,4 +152,20 @@ function multiplyNums(num1, num2) {
   return +num1 * +num2;
 }
 
-console.log(multiplyNums("2", "5"));
+function divideNums(a, b) {
+  if (b === "0") {
+    displayError();
+    return 0;
+  } else {
+    return +a / +b;
+  }
+}
+
+function displayError() {
+  objOperationData.error.textContent = "Yeah right! Try harder next time... 😡";
+  setTimeout(() => {
+    objOperationData.error.textContent = "";
+  }, 2000);
+}
+
+console.log(divideNums("2", "5"));
