@@ -141,15 +141,15 @@ function handleNegativeNums() {
 }
 
 function addNums(num1, num2) {
-  return +num1 + +num2;
+  return roundNumber(+num1 + +num2);
 }
 
 function subtractNums(num1, num2) {
-  return +num1 - +num2;
+  return roundNumber(+num1 - +num2);
 }
 
 function multiplyNums(num1, num2) {
-  return +num1 * +num2;
+  return roundNumber(+num1 * +num2);
 }
 
 function divideNums(a, b) {
@@ -157,7 +157,7 @@ function divideNums(a, b) {
     displayError();
     return 0;
   } else {
-    return +a / +b;
+    return roundNumber(+a / +b);
   }
 }
 
@@ -166,6 +166,14 @@ function displayError() {
   setTimeout(() => {
     objOperationData.error.textContent = "";
   }, 2000);
+}
+
+function roundNumber(num) {
+  if (num.toString().includes(".") & (num.toString().length > 5)) {
+    return num.toFixed(5);
+  } else {
+    return num;
+  }
 }
 
 console.log(divideNums("2", "5"));
