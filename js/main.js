@@ -6,6 +6,8 @@ let objCalculator = {
   num1: "0",
   num2: "0",
   sign: "",
+  lowSign: ["+", "−"],
+  highSign: ["÷", "×"],
 };
 
 objCalculator.buttons.forEach((button) => {
@@ -57,6 +59,37 @@ objCalculator.buttons.forEach((button) => {
         console.log("special char detected:", text);
         updateNumber(objCalculator, "sign", text);
       } else {
+        /*
+        if (<text> is + or - && obj.sign is + or -)
+        OR
+        if (<text> is / or * && obj.sign is /, *, +, or -)
+          1. execute operation
+          2. save the returned answer in objCalculator.num1
+          3. display the returned answer in objCalculator.output
+          4. replace objCalculator.sign with <text>
+        */
+        if (
+          objCalculator.lowSign.includes(text) ||
+          objCalculator.highSign.includes(objCalculator.sign)
+        ) {
+          // execute operation
+          console.log("matching signs found:", objCalculator.sign, text);
+          let answer = operate(
+            objCalculator.sign,
+            objCalculator.num1,
+            objCalculator.num2
+          );
+
+          // save the returned answer in objCalculator.num1
+          updateNumber(objCalculator, "num1", answer);
+          // display the returned answer in objCalculator.output
+          displayNumber(objCalculator.output, answer);
+          // replace objCalculator.sign with <text>
+          updateNumber(objCalculator, "sign", text);
+          // clear num2
+          updateNumber(objCalculator, "num2", "0");
+          console.log(objCalculator);
+        }
         /*
         if (<text> is + or - && obj.sign is + or -)
         OR
@@ -176,4 +209,21 @@ function roundNumber(num) {
   }
 }
 
-console.log(divideNums("2", "5"));
+// console.log(divideNums("2", "5"));
+
+function operate(sign, num1, num2) {
+  switch (sign) {
+    case "+":
+      return addNums(num1, num2);
+    case "−":
+      return subtractNums(num1, num2);
+    case "×":
+      return multiplyNums(num1, num2);
+    case "÷":
+      return divideNums(num1, num2);
+    case "=":
+      return "I'm yet to get this right";
+    default:
+      return "this was just a test";
+  }
+}
