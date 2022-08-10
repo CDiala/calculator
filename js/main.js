@@ -27,9 +27,10 @@ objCalculator.buttons.forEach((button) => {
         ) {
         } else {
           let isFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
-          let str = convertToString(
-            isFirstNum ? objCalculator.num1 : objCalculator.num2
-          );
+          let str = isFirstNum ? objCalculator.num1 : objCalculator.num2;
+          // let str = convertToString(
+          //   isFirstNum ? objCalculator.num1 : objCalculator.num2
+          // );
           str = appendString(str, text);
           updateNumber(objCalculator, isFirstNum ? "num1" : "num2", str);
         }
@@ -44,17 +45,19 @@ objCalculator.buttons.forEach((button) => {
         (objCalculator.num2 !== "0" && objCalculator.sign)
       ) {
         let appendFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
-        let str = convertToString(
-          appendFirstNum ? objCalculator.num1 : objCalculator.num2
-        );
+        let str = appendFirstNum ? objCalculator.num1 : objCalculator.num2;
+        // let str = convertToString(
+        //   appendFirstNum ? objCalculator.num1 : objCalculator.num2
+        // );
         str = appendString(str, text);
         updateNumber(objCalculator, appendFirstNum ? "num1" : "num2", str);
       }
     } else if (text === ".") {
       if (!objCalculator.input.value.includes(".")) {
-        let str = convertToString(
-          !objCalculator.sign ? objCalculator.num1 : objCalculator.num2
-        );
+        // let str = convertToString(
+        //   !objCalculator.sign ? objCalculator.num1 : objCalculator.num2
+        // );
+        let str = !objCalculator.sign ? objCalculator.num1 : objCalculator.num2;
         str = appendString(str, text);
         updateNumber(objCalculator, !objCalculator.sign ? "num1" : "num2", str);
       }
@@ -130,9 +133,9 @@ function updateNumber(obj, prop, value) {
   obj[prop] = value;
 }
 
-function convertToString(num) {
-  return num.toString();
-}
+// function convertToString(num) {
+// return num.toString();
+// }
 
 function appendString(oldVal, str) {
   return oldVal + str;
