@@ -176,15 +176,15 @@ function handleNegativeNums() {
 }
 
 function addNums(num1, num2) {
-  return roundNumber(+num1 + +num2);
+  return roundNumber(+num1 + +num2).toString();
 }
 
 function subtractNums(num1, num2) {
-  return roundNumber(+num1 - +num2);
+  return roundNumber(+num1 - +num2).toString();
 }
 
 function multiplyNums(num1, num2) {
-  return roundNumber(+num1 * +num2);
+  return roundNumber(+num1 * +num2).toString();
 }
 
 function divideNums(a, b) {
@@ -192,7 +192,7 @@ function divideNums(a, b) {
     displayError();
     return 0;
   } else {
-    return roundNumber(+a / +b);
+    return roundNumber(+a / +b).toString();
   }
 }
 
