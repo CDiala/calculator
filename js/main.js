@@ -98,7 +98,6 @@ objCalculator.buttons.forEach((button) => {
         ) {
           updateNumber(objCalculator, "tempSign", text);
           console.log(objCalculator);
-          // sample: 2 + 3 * 4
           // ELSE if (<text> is + or - && obj.sign is / or *): DONE
           //   1. store new sign in a tempSign variable in objCalculator (DONE)
           // updateNumber(objCalculator, "tempSign", text);
@@ -107,14 +106,24 @@ objCalculator.buttons.forEach((button) => {
 
           // MODIFY THE PSEUDO CODE BELOW
 
-          //   3a. if next sign is * or /, calculate num2 * tempNum OR num2 / tempNum and save the ans in num2. then save sign in tempSign and save next num in tempNum.
-          //   3b. if sign is + or - ,
-          //     i) calculate num1 +or- num2 *or/ tempNum and save answer in num1.
-          //     ii) update obj.sign to reflect the new sign from user.
-          //     iii) clear num2
-          //     iv) display answer in output
-          //     v) reset input to 0 (code already implemented - kindly confirm)
-          //   4. replace objCalculator.sign with <text>
+          /*
+          if next sign is * or /
+          [sample: 2 + 3 * 4 * 6] 
+            // a. calculate num2 * tempNum and assign the answer to obj.num2; 
+            // b. assign nextSign to obj.tempSign
+            // c. reset obj.tempNum to defalt value
+            // d. display result in output
+          */
+
+          /*
+          if sign is + or - 
+          [sample: 2 + 3 * 4 - 6]
+            // a. calculate num2 * tempNum and save ans in a variable (to be created).
+            // b. calc 2 + the ans stored in the variable above and save ans in num1.
+            // c. reset obj.sign, obj.num2, obj.tempNum, obj.tempSign
+            // d. save the next sign in obj.sign
+            // e. display result in output
+          */
         }
         console.log("perform operation");
       }
