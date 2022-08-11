@@ -13,6 +13,8 @@ let objCalculator = {
   allSign: ["÷", "×", "+", "−"],
 };
 
+// modify code to update sign if 2 sign btns  are clicked consecutively, instead of executing the operation
+
 objCalculator.buttons.forEach((button) => {
   let text = button.textContent;
   button.addEventListener("click", (e) => {
@@ -28,9 +30,6 @@ objCalculator.buttons.forEach((button) => {
         } else {
           let isFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
           let str = isFirstNum ? objCalculator.num1 : objCalculator.num2;
-          // let str = convertToString(
-          //   isFirstNum ? objCalculator.num1 : objCalculator.num2
-          // );
           str = appendString(str, text);
           updateNumber(objCalculator, isFirstNum ? "num1" : "num2", str);
         }
@@ -46,17 +45,11 @@ objCalculator.buttons.forEach((button) => {
       ) {
         let appendFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
         let str = appendFirstNum ? objCalculator.num1 : objCalculator.num2;
-        // let str = convertToString(
-        //   appendFirstNum ? objCalculator.num1 : objCalculator.num2
-        // );
         str = appendString(str, text);
         updateNumber(objCalculator, appendFirstNum ? "num1" : "num2", str);
       }
     } else if (text === ".") {
       if (!objCalculator.input.value.includes(".")) {
-        // let str = convertToString(
-        //   !objCalculator.sign ? objCalculator.num1 : objCalculator.num2
-        // );
         let str = !objCalculator.sign ? objCalculator.num1 : objCalculator.num2;
         str = appendString(str, text);
         updateNumber(objCalculator, !objCalculator.sign ? "num1" : "num2", str);
@@ -64,11 +57,12 @@ objCalculator.buttons.forEach((button) => {
     } else if (text === "←") {
       deleteNumber(objCalculator, "input");
     } else if (objCalculator.allSign.includes(text)) {
-      if (objCalculator.num2 === "0") {
-        console.log("special char detected:", text);
+      // if (objCalculator.num2 === "0") { //temporarily commented
+      if (!objCalculator.sign) {
+        // this code might potentially break. look out for it
         updateNumber(objCalculator, "sign", text);
-      } else {
-        /*
+      } //{
+      /*
         if (<text> is + or - && obj.sign is + or -)
         OR
         if (<text> is / or * && obj.sign is /, *, +, or -)
@@ -78,61 +72,82 @@ objCalculator.buttons.forEach((button) => {
           4. replace objCalculator.sign with <text>
           5. reset num2 to '0'
         */
-        if (
-          objCalculator.lowSign.includes(text) ||
-          objCalculator.highSign.includes(objCalculator.sign)
-        ) {
-          let answer = operate(
-            objCalculator.sign,
-            objCalculator.num1,
-            objCalculator.num2
-          );
-          updateNumber(objCalculator, "num1", answer);
-          displayNumber(objCalculator.output, answer);
-          updateNumber(objCalculator, "sign", text);
-          updateNumber(objCalculator, "num2", "0");
-          console.log(objCalculator);
-        } else if (
-          objCalculator.highSign.includes(text) &&
-          objCalculator.lowSign.includes(objCalculator.sign)
-        ) {
-          updateNumber(objCalculator, "tempSign", text);
-          console.log(objCalculator);
-          // ELSE if (<text> is + or - && obj.sign is / or *): DONE
-          //   1. store new sign in a tempSign variable in objCalculator (DONE)
-          // updateNumber(objCalculator, "tempSign", text);
-          //   2. save the next number in a tempNum variable in objCalculator (to be created)
-          // updateNumber(objCalculator, "tempNum", text); DONE (line 21)
-
-          // MODIFY THE PSEUDO CODE BELOW
-
-          /*
+      // num1, sign, num2, tempSign, tempNum
+      else if (
+        objCalculator.lowSign.includes(text) ||
+        objCalculator.highSign.includes(objCalculator.sign)
+      ) {
+        let answer = operate(
+          objCalculator.sign,
+          objCalculator.num1,
+          objCalculator.num2
+        );
+        updateNumber(objCalculator, "num1", answer);
+        displayNumber(objCalculator.output, answer);
+        // displayNumber(objCalculator.input, "0"); // testing
+        updateNumber(objCalculator, "sign", text);
+        updateNumber(objCalculator, "num2", "0");
+      } else if (
+        objCalculator.highSign.includes(text) &&
+        objCalculator.lowSign.includes(objCalculator.sign) &&
+        !objCalculator.tempSign // 2 + 1 *
+      ) {
+        updateNumber(objCalculator, "tempSign", text); // consider modifying this to check if tempsign is null
+        // console.log(objCalculator);
+        // ELSE if (<text> is + or - && obj.sign is / or *): DONE
+        //   1. store new sign in a tempSign variable in objCalculator (DONE)
+        // updateNumber(objCalculator, "tempSign", text);
+        //   2. save the next number in a tempNum variable in objCalculator (to be created)
+        // updateNumber(objCalculator, "tempNum", text); DONE (line 21)
+      } else if (
+        objCalculator.tempNum &&
+        objCalculator.highSign.includes(text)
+      ) {
+        let tempAns = operate(
+          objCalculator.tempSign,
+          objCalculator.num2,
+          objCalculator.tempNum
+        );
+        updateNumber(objCalculator, "num2", tempAns);
+        updateNumber(objCalculator, "tempSign", text);
+        updateNumber(objCalculator, "tempNum", "");
+        displayNumber(objCalculator.output, tempAns);
+        // displayNumber(objCalculator.input, "0"); // testing
+        /*
           if next sign is * or /
           [sample: 2 + 3 * 4 * 6] 
-            // a. calculate num2 * tempNum and assign the answer to obj.num2; 
-            // b. assign nextSign to obj.tempSign
+            // a. calculate num2 * tempNum and assign the answer to obj.num2; DONE
+            // b. assign nextSign to obj.tempSign DONE
             // c. reset obj.tempNum to defalt value
             // d. display result in output
           */
-
-          /*
-          if sign is + or - 
-          [sample: 2 + 3 * 4 - 6]
-            // a. calculate num2 * tempNum and save ans in a variable (to be created).
-            // b. calc 2 + the ans stored in the variable above and save ans in num1.
-            // c. reset obj.sign, obj.num2, obj.tempNum, obj.tempSign
-            // d. save the next sign in obj.sign
-            // e. display result in output
-          */
-        }
-        console.log("perform operation");
+        console.log("time to work");
       }
+      displayNumber(objCalculator.input, "0"); // testing
+      /*
+        if sign is + or - 
+        [sample: 2 + 3 * 4 - 6]
+          // a. calculate num2 * tempNum and save ans in a variable (to be created).
+          // b. calc num1 + the ans stored in the variable above and save ans in num1.
+          // c. reset obj.sign, obj.num2, obj.tempNum, obj.tempSign
+          // d. save the next sign in obj.sign
+          // e. display result in output
+        */
+      // }
     } else if (button.textContent.includes("±")) {
       handleNegativeNums();
     }
+    // displayNumber(
+    //   objCalculator.input,
+    //   !objCalculator.sign ? objCalculator.num1 : objCalculator.num2
+    // );
     displayNumber(
       objCalculator.input,
-      !objCalculator.sign ? objCalculator.num1 : objCalculator.num2
+      objCalculator.tempSign
+        ? objCalculator.tempNum || "0"
+        : !objCalculator.sign
+        ? objCalculator.num1
+        : objCalculator.num2
     );
     console.log(objCalculator);
   });
@@ -141,10 +156,6 @@ objCalculator.buttons.forEach((button) => {
 function updateNumber(obj, prop, value) {
   obj[prop] = value;
 }
-
-// function convertToString(num) {
-// return num.toString();
-// }
 
 function appendString(oldVal, str) {
   return oldVal + str;
@@ -209,9 +220,9 @@ function divideNums(a, b) {
 }
 
 function displayError() {
-  objOperationData.error.textContent = "Yeah right! Try harder next time... 😡";
+  objCalculator.error.textContent = "Yeah right! Try harder next time... 😡";
   setTimeout(() => {
-    objOperationData.error.textContent = "";
+    objCalculator.error.textContent = "";
   }, 2000);
 }
 
