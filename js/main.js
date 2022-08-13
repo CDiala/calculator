@@ -74,8 +74,9 @@ objCalculator.buttons.forEach((button) => {
         */
       // num1, sign, num2, tempSign, tempNum
       else if (
-        objCalculator.lowSign.includes(text) ||
-        objCalculator.highSign.includes(objCalculator.sign)
+        (objCalculator.lowSign.includes(text) ||
+          objCalculator.highSign.includes(objCalculator.sign)) &&
+        !objCalculator.tempSign
       ) {
         let answer = operate(
           objCalculator.sign,
@@ -84,13 +85,12 @@ objCalculator.buttons.forEach((button) => {
         );
         updateNumber(objCalculator, "num1", answer);
         displayNumber(objCalculator.output, answer);
-        // displayNumber(objCalculator.input, "0"); // testing
         updateNumber(objCalculator, "sign", text);
         updateNumber(objCalculator, "num2", "0");
       } else if (
         objCalculator.highSign.includes(text) &&
         objCalculator.lowSign.includes(objCalculator.sign) &&
-        !objCalculator.tempSign // 2 + 1 *
+        !objCalculator.tempSign
       ) {
         updateNumber(objCalculator, "tempSign", text); // consider modifying this to check if tempsign is null
         // console.log(objCalculator);
@@ -103,6 +103,15 @@ objCalculator.buttons.forEach((button) => {
         objCalculator.tempNum &&
         objCalculator.highSign.includes(text)
       ) {
+        // displayNumber(objCalculator.input, "0"); // testing
+        /*
+          if next sign is * or /
+          [sample: 2 + 3 * 4 * 6] 
+            // a. calculate num2 * tempNum and assign the answer to obj.num2; DONE
+            // b. assign nextSign to obj.tempSign DONE
+            // c. reset obj.tempNum to defalt value
+            // d. display result in output
+        */
         let tempAns = operate(
           objCalculator.tempSign,
           objCalculator.num2,
@@ -112,28 +121,18 @@ objCalculator.buttons.forEach((button) => {
         updateNumber(objCalculator, "tempSign", text);
         updateNumber(objCalculator, "tempNum", "");
         displayNumber(objCalculator.output, tempAns);
-        // displayNumber(objCalculator.input, "0"); // testing
-        /*
-          if next sign is * or /
-          [sample: 2 + 3 * 4 * 6] 
-            // a. calculate num2 * tempNum and assign the answer to obj.num2; DONE
-            // b. assign nextSign to obj.tempSign DONE
-            // c. reset obj.tempNum to defalt value
-            // d. display result in output
-          */
         console.log("time to work");
       }
-      displayNumber(objCalculator.input, "0"); // testing
+      // displayNumber(objCalculator.input, "0"); // testing
       /*
-        if sign is + or - 
-        [sample: 2 + 3 * 4 - 6]
-          // a. calculate num2 * tempNum and save ans in a variable (to be created).
-          // b. calc num1 + the ans stored in the variable above and save ans in num1.
-          // c. reset obj.sign, obj.num2, obj.tempNum, obj.tempSign
-          // d. save the next sign in obj.sign
-          // e. display result in output
+          if sign is + or - 
+          [sample: 2 + 3 * 4 - 6]
+            // a. calculate num2 * tempNum and save ans in a variable (to be created).
+            // b. calc num1 + the ans stored in the variable above and save ans in num1.
+            // c. reset obj.sign, obj.num2, obj.tempNum, obj.tempSign
+            // d. save the next sign in obj.sign
+            // e. display result in output
         */
-      // }
     } else if (button.textContent.includes("±")) {
       handleNegativeNums();
     }
@@ -233,8 +232,6 @@ function roundNumber(num) {
     return num;
   }
 }
-
-// console.log(divideNums("2", "5"));
 
 function operate(sign, num1, num2) {
   switch (sign) {
