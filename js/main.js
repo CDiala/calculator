@@ -122,17 +122,35 @@ objCalculator.buttons.forEach((button) => {
         updateNumber(objCalculator, "tempNum", "");
         displayNumber(objCalculator.output, tempAns);
         console.log("time to work");
+      } else if (
+        objCalculator.highSign.includes(objCalculator.tempSign) &&
+        objCalculator.lowSign.includes(text)
+      ) {
+        // displayNumber(objCalculator.input, "0"); // testing
+        /*
+            if sign is + or - 
+            [sample: 2 + 3 * 4 - 6]
+              // a. calculate num2 * tempNum and save ans in a variable (to be created).
+              // b. calc num1 + the ans stored in the variable above and save ans in num1.
+              // c. reset obj.sign, obj.num2, obj.tempNum, obj.tempSign
+              // d. save the next sign in obj.sign
+              // e. display result in output
+          */
+        let tempAns = operate(
+          objCalculator.tempSign,
+          objCalculator.num2,
+          objCalculator.tempNum
+        );
+        tempAns = operate(objCalculator.sign, objCalculator.num1, tempAns);
+        updateNumber(objCalculator, "num1", tempAns);
+        updateNumber(objCalculator, "sign", text);
+        updateNumber(objCalculator, "num2", "0");
+        updateNumber(objCalculator, "tempSign", "");
+        updateNumber(objCalculator, "tempNum", "");
+        displayNumber(objCalculator.output, tempAns);
+        // displayNumber(objCalculator.input, "0");
+        console.log("you garrit", tempAns);
       }
-      // displayNumber(objCalculator.input, "0"); // testing
-      /*
-          if sign is + or - 
-          [sample: 2 + 3 * 4 - 6]
-            // a. calculate num2 * tempNum and save ans in a variable (to be created).
-            // b. calc num1 + the ans stored in the variable above and save ans in num1.
-            // c. reset obj.sign, obj.num2, obj.tempNum, obj.tempSign
-            // d. save the next sign in obj.sign
-            // e. display result in output
-        */
     } else if (button.textContent.includes("±")) {
       handleNegativeNums();
     }
