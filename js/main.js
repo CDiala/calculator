@@ -13,8 +13,6 @@ let objCalculator = {
   allSign: ["÷", "×", "+", "−"],
 };
 
-// modify code to update sign if 2 sign btns  are clicked consecutively, instead of executing the operation
-
 objCalculator.buttons.forEach((button) => {
   let text = button.textContent;
   button.addEventListener("click", (e) => {
@@ -57,23 +55,9 @@ objCalculator.buttons.forEach((button) => {
     } else if (text === "←") {
       deleteNumber(objCalculator, "input");
     } else if (objCalculator.allSign.includes(text)) {
-      // if (objCalculator.num2 === "0") { //temporarily commented
       if (!objCalculator.sign) {
-        // this code might potentially break. look out for it
         updateNumber(objCalculator, "sign", text);
-      } //{
-      /*
-        if (<text> is + or - && obj.sign is + or -)
-        OR
-        if (<text> is / or * && obj.sign is /, *, +, or -)
-          1. execute operation
-          2. save the returned answer in objCalculator.num1
-          3. display the returned answer in objCalculator.output
-          4. replace objCalculator.sign with <text>
-          5. reset num2 to '0'
-        */
-      // num1, sign, num2, tempSign, tempNum
-      else if (
+      } else if (
         (objCalculator.lowSign.includes(text) ||
           objCalculator.highSign.includes(objCalculator.sign)) &&
         !objCalculator.tempSign
@@ -92,72 +76,50 @@ objCalculator.buttons.forEach((button) => {
         objCalculator.lowSign.includes(objCalculator.sign) &&
         !objCalculator.tempSign
       ) {
-        updateNumber(objCalculator, "tempSign", text); // consider modifying this to check if tempsign is null
-        // console.log(objCalculator);
-        // ELSE if (<text> is + or - && obj.sign is / or *): DONE
-        //   1. store new sign in a tempSign variable in objCalculator (DONE)
-        // updateNumber(objCalculator, "tempSign", text);
-        //   2. save the next number in a tempNum variable in objCalculator (to be created)
-        // updateNumber(objCalculator, "tempNum", text); DONE (line 21)
+        updateNumber(objCalculator, "tempSign", text);
       } else if (
         objCalculator.tempNum &&
         objCalculator.highSign.includes(text)
       ) {
-        // displayNumber(objCalculator.input, "0"); // testing
-        /*
-          if next sign is * or /
-          [sample: 2 + 3 * 4 * 6] 
-            // a. calculate num2 * tempNum and assign the answer to obj.num2; DONE
-            // b. assign nextSign to obj.tempSign DONE
-            // c. reset obj.tempNum to defalt value
-            // d. display result in output
-        */
-        let tempAns = operate(
+        runSimpleCalculation(
           objCalculator.tempSign,
           objCalculator.num2,
-          objCalculator.tempNum
+          objCalculator.tempNum,
+          text
         );
-        updateNumber(objCalculator, "num2", tempAns);
-        updateNumber(objCalculator, "tempSign", text);
-        updateNumber(objCalculator, "tempNum", "");
-        displayNumber(objCalculator.output, tempAns);
-        console.log("time to work");
       } else if (
         objCalculator.highSign.includes(objCalculator.tempSign) &&
         objCalculator.lowSign.includes(text)
       ) {
-        // displayNumber(objCalculator.input, "0"); // testing
-        /*
-            if sign is + or - 
-            [sample: 2 + 3 * 4 - 6]
-              // a. calculate num2 * tempNum and save ans in a variable (to be created).
-              // b. calc num1 + the ans stored in the variable above and save ans in num1.
-              // c. reset obj.sign, obj.num2, obj.tempNum, obj.tempSign
-              // d. save the next sign in obj.sign
-              // e. display result in output
-          */
-        let tempAns = operate(
+        runComplexCalculation(
           objCalculator.tempSign,
           objCalculator.num2,
-          objCalculator.tempNum
+          objCalculator.tempNum,
+          text
         );
-        tempAns = operate(objCalculator.sign, objCalculator.num1, tempAns);
-        updateNumber(objCalculator, "num1", tempAns);
-        updateNumber(objCalculator, "sign", text);
-        updateNumber(objCalculator, "num2", "0");
-        updateNumber(objCalculator, "tempSign", "");
-        updateNumber(objCalculator, "tempNum", "");
-        displayNumber(objCalculator.output, tempAns);
-        // displayNumber(objCalculator.input, "0");
-        console.log("you garrit", tempAns);
       }
-    } else if (button.textContent.includes("±")) {
+    } else if (text.includes("±")) {
       handleNegativeNums();
+    } else if (text === "=") {
+      if (objCalculator.sign) {
+        if (objCalculator.tempNum) {
+          runComplexCalculation(
+            objCalculator.tempSign,
+            objCalculator.num2,
+            objCalculator.tempNum
+          );
+        } else {
+          runSimpleCalculation(
+            objCalculator.sign,
+            objCalculator.num1,
+            objCalculator.num2
+          );
+        }
+      } else {
+        displayNumber(objCalculator.output, "0");
+      }
+      resetInputs(objCalculator);
     }
-    // displayNumber(
-    //   objCalculator.input,
-    //   !objCalculator.sign ? objCalculator.num1 : objCalculator.num2
-    // );
     displayNumber(
       objCalculator.input,
       objCalculator.tempSign
@@ -169,6 +131,41 @@ objCalculator.buttons.forEach((button) => {
     console.log(objCalculator);
   });
 });
+
+function runSimpleCalculation(sign, num1, num2, text = "") {
+  let tempAns = operate(sign, num1, num2);
+
+  updateNumber(objCalculator, "num2", tempAns);
+  updateNumber(objCalculator, "tempSign", text);
+  updateNumber(objCalculator, "tempNum", "");
+  displayNumber(objCalculator.output, tempAns);
+}
+
+function runComplexCalculation(sign, num1, num2, text) {
+  let tempAns = operate(sign, num1, num2);
+  tempAns = operate(objCalculator.sign, objCalculator.num1, tempAns);
+
+  updateNumber(objCalculator, "num1", tempAns);
+  updateNumber(objCalculator, "sign", text);
+  updateNumber(objCalculator, "num2", "0");
+  updateNumber(objCalculator, "tempSign", "");
+  updateNumber(objCalculator, "tempNum", "");
+  displayNumber(objCalculator.output, tempAns);
+}
+
+function resetInputs(obj) {
+  for (let key in obj) {
+    if (key.includes("num")) {
+      obj[key] = "0";
+    } else if (
+      key.includes("sign") |
+      key.includes("temp") |
+      key.includes("error")
+    ) {
+      obj[key] = "";
+    }
+  }
+}
 
 function updateNumber(obj, prop, value) {
   obj[prop] = value;
@@ -187,6 +184,7 @@ function deleteNumber(obj, prop) {
   let newStr;
   charLength = obj[prop].value.length;
   newStr = obj[prop].value.substring(0, charLength - 1);
+
   updateNumber(
     obj,
     obj.sign ? "num2" : "num1",
@@ -195,11 +193,13 @@ function deleteNumber(obj, prop) {
       ? "0"
       : newStr
   );
+
   displayNumber(obj[prop], newStr);
 }
 
 function handleNegativeNums() {
   let tempArr;
+
   if (!objCalculator.input.value.toString().includes("-")) {
     tempArr = objCalculator.input.value.split("");
     tempArr.unshift("-");
@@ -207,7 +207,9 @@ function handleNegativeNums() {
   } else {
     tempArr = objCalculator.input.value.substring(1);
   }
+
   displayNumber(objCalculator.input, tempArr);
+
   updateNumber(
     objCalculator,
     !objCalculator.sign ? "num1" : "num2",
@@ -261,8 +263,6 @@ function operate(sign, num1, num2) {
       return multiplyNums(num1, num2);
     case "÷":
       return divideNums(num1, num2);
-    case "=":
-      return "I'm yet to get this right";
     default:
       return "this was just a test";
   }
