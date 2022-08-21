@@ -1,3 +1,13 @@
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
 :root {
   --color-black: #000000;
   --color-extra: #c5bdbd;
@@ -10,27 +20,38 @@
   --color-warning: rgb(223, 84, 25);
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
-  align-items: center;
-  column-gap: 60px;
-  display: flex;
   height: 100vh;
-  justify-content: center;
   margin: 0;
+}
+
+.body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  row-gap: 10px;
 }
 
 .calculator-container {
   background-color: var(--color-black);
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  margin-left: 60px;
   max-height: 678px;
-  max-width: 420px;
+  max-width: 425px;
   width: 100%;
 }
 
 .calculator-display-container {
   display: flex;
+  flex: 1;
   flex-direction: column;
   height: 118px;
   padding: 20px 30px;
@@ -115,19 +136,6 @@ body {
   text-align: right;
 }
 
-/* remove the arrow effect due to input[type='number'] */
-/* Chrome, Safari, Edge, Opera */
-/* input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-} */
-
-/* Firefox */
-/* input[type="number"] {
-  -moz-appearance: textfield;
-} */
-
 .calculator-display-output {
   font-size: 48px;
 }
@@ -138,4 +146,37 @@ input::-webkit-inner-spin-button {
 
 .kudos {
   font-size: 18px;
+  margin: 0.5rem 0 0;
+}
+
+@media screen and (max-width: 375px) {
+  .body {
+    row-gap: 0;
+  }
+
+  .calculator-display-container {
+    padding: 30px 30px 10px 30px;
+    row-gap: 10px;
+  }
+
+  .btn {
+    font-size: 1.2rem;
+    height: 68px;
+    width: 68px;
+  }
+
+  .kudos {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .calculator-key-container {
+    gap: 10px 10px;
+    padding: 12px;
+  }
+
+  .error-display {
+    font-size: 1.05rem;
+  }
 }
