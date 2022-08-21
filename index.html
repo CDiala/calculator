@@ -10,37 +10,48 @@
   </head>
 
   <body>
-    <main class="calculator-container">
-      <section class="calculator-display-container">
-        <input class="calculator-display-output" readonly type="text" />
-        <input class="calculator-display-input" value="0" type="text" />
-        <p class="error-display"></p>
-      </section>
-      <section class="calculator-key-container">
-        <button class="btn btn-cancel">C</button>
-        <button class="btn btn-plus-minus">&PlusMinus;</button>
-        <button class="btn btn-percent">&percnt;</button>
-        <button class="btn btn-sign">&divide;</button>
-        <button class="btn btn-num">1</button>
-        <button class="btn btn-num">2</button>
-        <button class="btn btn-num">3</button>
-        <button class="btn btn-sign">&times;</button>
-        <button class="btn btn-num">4</button>
-        <button class="btn btn-num">5</button>
-        <button class="btn btn-num">6</button>
-        <button class="btn btn-sign">&minus;</button>
-        <button class="btn btn-num">7</button>
-        <button class="btn btn-num">8</button>
-        <button class="btn btn-num">9</button>
-        <button class="btn btn-sign">&plus;</button>
-        <button class="btn btn-num">0</button>
-        <button class="btn btn-num">&period;</button>
-        <button class="btn btn-back">&LeftArrow;</button>
-        <button class="btn btn-equals">&equals;</button>
-      </section>
-    </main>
-    <aside>
-      <p class="kudos">Design inspired by Apple's Calculator app.</p>
-    </aside>
+    <div class="body">
+      <main class="calculator-container">
+        <section class="calculator-display-container">
+          <input class="calculator-display-output" readonly type="text" />
+          <input
+            class="calculator-display-input"
+            readonly
+            value="0"
+            type="text"
+          />
+          <p class="error-display"></p>
+        </section>
+        <section class="calculator-key-container">
+          <button class="btn btn-cancel" data-action="cancel">C</button>
+          <button class="btn btn-plus-minus" data-action="absolute">
+            &PlusMinus;
+          </button>
+          <button class="btn btn-percent" data-action="percent">
+            &percnt;
+          </button>
+          <button class="btn btn-sign" data-action="divide">&divide;</button>
+          <button class="btn btn-num">1</button>
+          <button class="btn btn-num">2</button>
+          <button class="btn btn-num">3</button>
+          <button class="btn btn-sign" data-action="multiply">&times;</button>
+          <button class="btn btn-num">4</button>
+          <button class="btn btn-num">5</button>
+          <button class="btn btn-num">6</button>
+          <button class="btn btn-sign" data-action="minus">&minus;</button>
+          <button class="btn btn-num">7</button>
+          <button class="btn btn-num">8</button>
+          <button class="btn btn-num">9</button>
+          <button class="btn btn-sign" data-action="add">&plus;</button>
+          <button class="btn btn-num">0</button>
+          <button class="btn btn-num" data-action="decimal">&period;</button>
+          <button class="btn btn-back" data-action="delete">&LeftArrow;</button>
+          <button class="btn btn-equals" data-action="equals">&equals;</button>
+        </section>
+      </main>
+      <aside>
+        <p class="kudos">Design inspired by Apple's Calculator app.</p>
+      </aside>
+    </div>
   </body>
 </html>
