@@ -8,3 +8,6 @@ This project was developed using the following technologies:
 * CSS
 * JavaScript
 
+## Update
+* Modified to execute mathematical operations in line with [BODMAS](https://www.skillsyouneed.com/num/bodmas.html) principle.
+* Implemented responsiveness for better user experience on mobile screens.
