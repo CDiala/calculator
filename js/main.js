@@ -201,7 +201,11 @@ function updateNumber(obj, prop, value) {
 }
 
 function appendString(oldVal, str) {
-  return oldVal + str;
+  if (oldVal === "-0") {
+    return oldVal.replace("0", str);
+  } else {
+    return oldVal + str;
+  }
 }
 
 function displayNumber(field, value) {
