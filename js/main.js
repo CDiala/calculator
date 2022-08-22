@@ -131,6 +131,16 @@ objCalculator.buttons.forEach((button) => {
         displayNumber(objCalculator.output, "0");
       }
       resetInputs(objCalculator);
+    } else if (text.includes("C")) {
+      let savedNum =
+        objCalculator.tempNum === objCalculator.input.value
+          ? "tempNum"
+          : objCalculator.num2 === objCalculator.input.value
+          ? "num2"
+          : "num1";
+
+      displayNumber(objCalculator.input, "");
+      updateNumber(objCalculator, savedNum, "0");
     }
     displayNumber(
       objCalculator.input,
