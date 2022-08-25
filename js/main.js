@@ -26,8 +26,6 @@ objCalculator.buttons.forEach((button) => {
           (objCalculator.sign && objCalculator.num2 === "0")
         ) {
         } else {
-          // let isFirstNum = isFirstNum();
-          // let isFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
           let str = isFirstNum() ? objCalculator.num1 : objCalculator.num2;
           str = appendString(str, text);
           updateNumber(objCalculator, isFirstNum ? "num1" : "num2", str);
@@ -40,33 +38,26 @@ objCalculator.buttons.forEach((button) => {
         updateNumber(objCalculator, replaceFirstNum ? "num1" : "num2", text);
       } else if (
         isFirstNum() ||
-        // (objCalculator.num1 !== "0" && !objCalculator.sign) ||
         (objCalculator.num2 !== "0" && objCalculator.sign)
       ) {
-        // let appendFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
-        // let appendFirstNum = objCalculator.num1 !== "0" && !objCalculator.sign;
         let str = isFirstNum() ? objCalculator.num1 : objCalculator.num2;
         str = appendString(str, text);
         updateNumber(objCalculator, isFirstNum() ? "num1" : "num2", str);
       }
     } else if (text === ".") {
       if (!isMember(objCalculator.input.value, ".")) {
-        // if (!objCalculator.input.value.includes(".")) {
         let str = !objCalculator.sign ? objCalculator.num1 : objCalculator.num2;
         str = appendString(str, text);
         updateNumber(objCalculator, !objCalculator.sign ? "num1" : "num2", str);
       }
     } else if (text === "←") {
       deleteNumber(objCalculator, "input");
-      // } else if (objCalculator.allSign.includes(text)) {
     } else if (isMember(objCalculator.allSign, text)) {
       if (!objCalculator.sign) {
         updateNumber(objCalculator, "sign", text);
       } else if (
         (isMember(objCalculator.lowSign, text) ||
           isMember(objCalculator.highSign, objCalculator.sign)) &&
-        // (objCalculator.lowSign.includes(text) ||
-        //   objCalculator.highSign.includes(objCalculator.sign)) &&
         !objCalculator.tempSign
       ) {
         let answer = operate(
@@ -79,8 +70,6 @@ objCalculator.buttons.forEach((button) => {
         updateNumber(objCalculator, "sign", text);
         updateNumber(objCalculator, "num2", "0");
       } else if (
-        // objCalculator.highSign.includes(text) &&
-        // objCalculator.lowSign.includes(objCalculator.sign) &&
         isMember(objCalculator.highSign, text) &&
         isMember(objCalculator.lowSign, objCalculator.sign) &&
         !objCalculator.tempSign
@@ -88,7 +77,6 @@ objCalculator.buttons.forEach((button) => {
         updateNumber(objCalculator, "tempSign", text);
       } else if (
         objCalculator.tempNum &&
-        // objCalculator.highSign.includes(text)
         isMember(objCalculator.highSign, text)
       ) {
         runSimpleCalculation(
@@ -100,8 +88,6 @@ objCalculator.buttons.forEach((button) => {
       } else if (
         isMember(objCalculator.highSign, objCalculator.tempSign) &&
         isMember(objCalculator.lowSign, text)
-        // objCalculator.highSign.includes(objCalculator.tempSign) &&
-        // objCalculator.lowSign.includes(text)
       ) {
         runComplexCalculation(
           objCalculator.tempSign,
@@ -185,15 +171,16 @@ function runComplexCalculation(sign, num1, num2, text) {
 function resetInputs(obj) {
   for (let key in obj) {
     if (key.includes("num")) {
-      obj[key] = "0";
+      updateNumber(objCalculator, key, "0");
     } else if (
       key.includes("sign") |
       key.includes("temp") |
       key.includes("error")
     ) {
-      obj[key] = "";
+      updateNumber(objCalculator, key, "");
     }
   }
+  console.log(objCalculator);
 }
 
 function updateNumber(obj, prop, value) {
@@ -297,6 +284,6 @@ function operate(sign, num1, num2) {
     case "÷":
       return divideNums(num1, num2);
     default:
-      return "this was just a test";
+      return `${sign}, ${num1}, ${num2}`; // for testing purpose
   }
 }
